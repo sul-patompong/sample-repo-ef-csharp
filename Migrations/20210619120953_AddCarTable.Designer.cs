@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sample_repo_ef_csharp.Persistence;
 
 namespace sample_repo_ef_csharp.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619120953_AddCarTable")]
+    partial class AddCarTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
