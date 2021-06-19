@@ -1,0 +1,1 @@
+This folder will contain all `Sqlite` files after database was updated
