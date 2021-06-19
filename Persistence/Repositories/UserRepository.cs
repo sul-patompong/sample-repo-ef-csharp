@@ -1,9 +1,10 @@
 using System.Linq;
 using sample_repo_ef_csharp.Core.Domain;
+using sample_repo_ef_csharp.Core.Repositories;
 
 namespace sample_repo_ef_csharp.Persistence.Repositories
 {
-    public class UserRepository : Repository<User>
+    public class UserRepository : Repository<User> , IUserRepository
     {
         private readonly CoreDbContext _context;
         public UserRepository(CoreDbContext context) : base(context)

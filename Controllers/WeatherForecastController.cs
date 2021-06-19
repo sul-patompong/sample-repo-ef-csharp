@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using sample_repo_ef_csharp.Core;
 using sample_repo_ef_csharp.Core.Domain;
+using sample_repo_ef_csharp.Core.Repositories;
 using sample_repo_ef_csharp.Persistence;
 using sample_repo_ef_csharp.Persistence.Repositories;
 
@@ -14,10 +16,7 @@ namespace sample_repo_ef_csharp.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
-        private readonly CarRepository _carRepository;
-        private readonly CoreDbContext _context;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -25,13 +24,10 @@ namespace sample_repo_ef_csharp.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _context = new CoreDbContext();
-            _userRepository = new UserRepository(_context);
-            _carRepository = new CarRepository(_context);
-            _unitOfWork = new UnitOfWork(_context);
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -51,7 +47,6 @@ namespace sample_repo_ef_csharp.Controllers
         [Route("/1")]
         public User GetLastUpdatedUser()
         {
-            // return _userRepository.GetLastUpdatedUser();
             return _unitOfWork.Users.GetLastUpdatedUser();
         }
 
@@ -59,14 +54,14 @@ namespace sample_repo_ef_csharp.Controllers
         [Route("/2")]
         public List<User> GetAllUsers()
         {
-            return _userRepository.GetAll().ToList();
+            return _unitOfWork.Users.GetAll().ToList();
         }
 
         [HttpGet]
         [Route("/3")]
         public List<Car> GetAllCars()
         {
-            return _carRepository.GetAll().ToList();
+            return _unitOfWork.Cars.GetAll().ToList();
         }
     }
 }

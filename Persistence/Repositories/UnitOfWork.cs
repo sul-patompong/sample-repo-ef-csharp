@@ -1,6 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using sample_repo_ef_csharp.Core;
+using sample_repo_ef_csharp.Core.Repositories;
+
 namespace sample_repo_ef_csharp.Persistence.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly CoreDbContext _context;
 
@@ -11,8 +15,8 @@ namespace sample_repo_ef_csharp.Persistence.Repositories
             Users = new UserRepository(context);
         }
 
-        public CarRepository Cars { get; private set; }
-        public UserRepository Users { get; private set; }
+        public ICarRepository Cars { get; private set; }
+        public IUserRepository Users { get; private set; }
 
         public int Complete()
         {

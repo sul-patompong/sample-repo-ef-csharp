@@ -6,9 +6,10 @@ namespace sample_repo_ef_csharp.Persistence
 {
     public class CoreDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public CoreDbContext(DbContextOptions<CoreDbContext> options)
+            : base(options)
         {
-            base.OnConfiguring(optionsBuilder.UseSqlite(@"Data Source=" + Path.Combine("Persistence", "Sqlite", "CoreDb.db")));
+            
         }
 
         public DbSet<User> Users { get; set; }
